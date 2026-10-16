@@ -1,0 +1,492 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reading books</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    font-family: "Segoe UI", Arial, sans-serif;
+    background: linear-gradient(135deg, #172b4d, #4169a8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.container {
+    width: 100%;
+    max-width: 440px;
+    background: #fff;
+    border-radius: 20px;
+    padding: 35px;
+    box-shadow: 0 20px 60px #0003;
+}
+
+.logo {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.logo .icon {
+    font-size: 45px;
+}
+
+.logo h1 {
+    color: #172b4d;
+    font-size: 27px;
+}
+
+.logo p {
+    color: #7b879b;
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+.tabs {
+    display: flex;
+    background: #f0f3f9;
+    padding: 5px;
+    border-radius: 10px;
+    margin-bottom: 25px;
+}
+
+.tabs button {
+    flex: 1;
+    border: none;
+    padding: 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    color: #667085;
+    background: transparent;
+}
+
+.tabs button.active {
+    background: #4169a8;
+    color: white;
+}
+
+h2 {
+    color: #172b4d;
+    margin-bottom: 7px;
+    font-size: 23px;
+}
+
+.subtitle {
+    color: #7b879b;
+    font-size: 14px;
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    color: #344054;
+    margin: 15px 0 7px;
+}
+
+input {
+    width: 100%;
+    padding: 12px 13px;
+    border: 1px solid #d0d5dd;
+    border-radius: 9px;
+    outline: none;
+    font-size: 14px;
+}
+
+input:focus {
+    border-color: #4169a8;
+    box-shadow: 0 0 0 3px #4169a81a;
+}
+
+.password-box {
+    position: relative;
+}
+
+.password-box input {
+    padding-right: 60px;
+}
+
+.toggle-password {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    border: none;
+    background: transparent;
+    color: #4169a8;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.main-btn {
+    width: 100%;
+    padding: 13px;
+    margin-top: 23px;
+    border: none;
+    border-radius: 9px;
+    color: white;
+    background: #172b4d;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.main-btn:hover {
+    background: #294775;
+}
+
+.bottom-text {
+    text-align: center;
+    color: #7b879b;
+    margin-top: 20px;
+    font-size: 14px;
+}
+
+.link {
+    color: #4169a8;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.message {
+    display: none;
+    margin-top: 15px;
+    padding: 11px;
+    border-radius: 8px;
+    font-size: 13px;
+    overflow-wrap: anywhere;
+}
+
+.message.error {
+    display: block;
+    background: #fff0ef;
+    color: #b42332;
+}
+
+.message.success {
+    display: block;
+    background: #e8f7ed;
+    color: #177245;
+}
+
+.note {
+    margin-top: 20px;
+    background: #f5f7fb;
+    padding: 12px;
+    border-radius: 8px;
+    color: #667085;
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+footer {
+    text-align: center;
+    margin-top: 25px;
+    color: #9aa5b5;
+    font-size: 12px;
+}
+
+[hidden] {
+    display: none !important;
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 25px 20px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="logo">
+        <div class="icon">📚</div>
+        <h1>Eba Reading Books </h1>
+        <p>Your personal digital library</p>
+    </div>
+
+    <div class="tabs">
+        <button id="login-tab" class="active" type="button">
+            Login
+        </button>
+        <button id="register-tab" type="button">
+            Register
+        </button>
+    </div>
+
+    <form id="login-form">
+        <h2>Welcome back!</h2>
+        <p class="subtitle">Log in to continue reading your favorite books.</p>
+
+        <label for="login-email">Email address</label>
+        <input id="login-email" type="email"
+               placeholder="Enter your email"
+               autocomplete="email" required>
+
+        <label for="login-password">Password</label>
+        <div class="password-box">
+            <input id="login-password" type="password"
+                   placeholder="Enter your password"
+                   autocomplete="current-password" required>
+            <button type="button" class="toggle-password"
+                    data-target="login-password">Show</button>
+        </div>
+
+        <div id="login-message" class="message" role="status"></div>
+
+        <button type="submit" class="main-btn">Login to Book Haven</button>
+
+        <p class="bottom-text">
+            Don't have an account?
+            <span class="link" id="go-register">Register now</span>
+        </p>
+    </form>
+
+    <form id="register-form" hidden>
+        <h2>Create an account</h2>
+        <p class="subtitle">Join Book Haven and explore our library.</p>
+
+        <label for="register-name">Full name</label>
+        <input id="register-name" type="text"
+               placeholder="Enter your full name"
+               maxlength="100" autocomplete="name" required>
+
+        <label for="register-email">Email address</label>
+        <input id="register-email" type="email"
+               placeholder="Enter your email"
+               autocomplete="email" required>
+
+        <label for="register-password">Password</label>
+        <div class="password-box">
+            <input id="register-password" type="password"
+                   placeholder="Minimum 8 characters"
+                   minlength="8" autocomplete="new-password" required>
+            <button type="button" class="toggle-password"
+                    data-target="register-password">Show</button>
+        </div>
+
+        <label for="confirm-password">Confirm password</label>
+        <div class="password-box">
+            <input id="confirm-password" type="password"
+                   placeholder="Repeat your password"
+                   minlength="8" autocomplete="new-password" required>
+            <button type="button" class="toggle-password"
+                    data-target="confirm-password">Show</button>
+        </div>
+
+        <div id="register-message" class="message" role="status"></div>
+
+        <button type="submit" class="main-btn">Create Account</button>
+
+        <p class="bottom-text">
+            Already have an account?
+            <span class="link" id="go-login">Login here</span>
+        </p>
+
+        <div class="note">
+            New accounts are automatically assigned the <strong>User</strong>
+            role. Administrator access is assigned separately and securely.
+        </div>
+    </form>
+
+    <footer>© 2026 Ebisa Lemesa: Read. Discover. Grow.</footer>
+
+</div>
+
+<script type="module">
+import { initializeApp }
+    from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
+
+import {
+    getAuth,
+    createUserWithEmailAndPassword,
+    signInWithEmailAndPassword,
+    updateProfile
+} from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
+
+import {
+    getFirestore,
+    doc,
+    setDoc,
+    serverTimestamp
+} from "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
+
+/* Replace with your Firebase project configuration. */
+const firebaseConfig = {
+    apiKey: "YOUR_API_KEY",
+    authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+    projectId: "YOUR_PROJECT_ID",
+    storageBucket: "YOUR_STORAGE_BUCKET",
+    messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+    appId: "YOUR_APP_ID"
+};
+
+const firebaseApp = initializeApp(firebaseConfig);
+const auth = getAuth(firebaseApp);
+const db = getFirestore(firebaseApp);
+
+const loginForm = document.getElementById("login-form");
+const registerForm = document.getElementById("register-form");
+const loginTab = document.getElementById("login-tab");
+const registerTab = document.getElementById("register-tab");
+
+function showForm(mode) {
+    const registering = mode === "register";
+
+    loginForm.hidden = registering;
+    registerForm.hidden = !registering;
+
+    loginTab.classList.toggle("active", !registering);
+    registerTab.classList.toggle("active", registering);
+
+    clearMessages();
+}
+
+function clearMessages() {
+    document.querySelectorAll(".message").forEach(el => {
+        el.textContent = "";
+        el.className = "message";
+    });
+}
+
+function showMessage(id, text, success = false) {
+    const el = document.getElementById(id);
+    el.textContent = text;
+    el.className = "message " + (success ? "success" : "error");
+}
+
+function friendlyError(error) {
+    const errors = {
+        "auth/email-already-in-use": "This email is already registered.",
+        "auth/invalid-email": "Enter a valid email address.",
+        "auth/weak-password": "Choose a stronger password.",
+        "auth/invalid-credential": "Incorrect email or password.",
+        "auth/too-many-requests": "Too many attempts. Try again later.",
+        "permission-denied": "Firebase denied access. Check your security rules."
+    };
+    return errors[error.code] || "Unable to complete your request. Please try again.";
+}
+
+loginTab.addEventListener("click", () => showForm("login"));
+registerTab.addEventListener("click", () => showForm("register"));
+
+document.getElementById("go-register").addEventListener("click", () => {
+    showForm("register");
+});
+
+document.getElementById("go-login").addEventListener("click", () => {
+    showForm("login");
+});
+
+document.querySelectorAll(".toggle-password").forEach(button => {
+    button.addEventListener("click", () => {
+        const input = document.getElementById(button.dataset.target);
+        const visible = input.type === "password";
+        input.type = visible ? "text" : "password";
+        button.textContent = visible ? "Hide" : "Show";
+    });
+});
+
+loginForm.addEventListener("submit", async event => {
+    event.preventDefault();
+
+    const button = loginForm.querySelector(".main-btn");
+    button.disabled = true;
+
+    try {
+        await signInWithEmailAndPassword(
+            auth,
+            document.getElementById("login-email").value.trim(),
+            document.getElementById("login-password").value
+        );
+
+        showMessage(
+            "login-message",
+            "Login successful! Opening your library...",
+            true
+        );
+
+        // The main Book Haven application should handle the
+        // authenticated user's role and show the proper dashboard.
+    } catch (error) {
+        showMessage("login-message", friendlyError(error));
+    } finally {
+        button.disabled = false;
+    }
+});
+
+registerForm.addEventListener("submit", async event => {
+    event.preventDefault();
+
+    const button = registerForm.querySelector(".main-btn");
+    const name = document.getElementById("register-name").value.trim();
+    const email = document.getElementById("register-email").value.trim();
+    const password = document.getElementById("register-password").value;
+    const confirmation = document.getElementById("confirm-password").value;
+
+    if (password !== confirmation) {
+        showMessage("register-message", "Passwords do not match.");
+        return;
+    }
+
+    button.disabled = true;
+    let credential = null;
+
+    try {
+        credential = await createUserWithEmailAndPassword(
+            auth, email, password
+        );
+
+        await updateProfile(credential.user, {
+            displayName: name
+        });
+
+        await setDoc(doc(db, "users", credential.user.uid), {
+            name,
+            email: credential.user.email,
+            role: "user",
+            createdAt: serverTimestamp()
+        });
+
+        showMessage(
+            "register-message",
+            "Registration successful! Your account is ready.",
+            true
+        );
+
+        registerForm.reset();
+
+        // Connect this form to the main application's authentication
+        // listener to open the correct dashboard after registration.
+    } catch (error) {
+        if (credential) {
+            try {
+                await (await import(
+                    "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js"
+                )).signOut(auth);
+            } catch {}
+        }
+        showMessage("register-message", friendlyError(error));
+    } finally {
+        button.disabled = false;
+    }
+});
+</script>
+
+</body>
+</html>
